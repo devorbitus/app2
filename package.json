@@ -19,11 +19,6 @@
   "homepage": "https://github.com/devorbitus/app1#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "form-data": "^2.3.3",
-    "formdata-node": "^3.5.0",
-    "gcp-metadata": "^4.2.1",
-    "google-auth-library": "^7.1.0",
-    "node-fetch": "^2.6.1",
     "node-vault": "^0.9.21",
     "pg": "^8.6.0"
   }
