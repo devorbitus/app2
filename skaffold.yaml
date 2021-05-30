@@ -1,0 +1,13 @@
+apiVersion: skaffold/v2beta5
+kind: Config
+metadata:
+  name: app2
+build:
+  tagPolicy:
+    gitCommit: {}
+  artifacts:
+    - image: devorbitus/app2
+deploy:
+  kustomize:
+    paths:
+      - "."

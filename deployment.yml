@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2
+  labels:
+    app: node-app2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-app2
+  template:
+    metadata:
+      labels:
+        app: node-app2
+    spec:
+      containers:
+      - name: node-app2
+        image: devorbitus/app2
+        ports:
+        - containerPort: 3000
+        env:
+          - name: DATABASE_HOST
+            value: 'my-release-postgresql'
+        volumeMounts:
+          - mountPath: /opt/gcloud
+            readOnly: true
+            name: gcp-auth-token
+      - name: gcp-vault-auth
+        image: vault:1.7.2
+        command: ["/scripts/gcp_iam_auth_vault.sh"]
+        env:
+          - name: VAULT_ADDR
+            value: 'https://vault.spingo1.spingo.armory.io'
+          - name: GCP_VAULT_IAM_ROLE
+            value: my-iam-role
+          - name: GCP_SA_EMAIL
+            value: 'vault-sa@cs-spingo1.iam.gserviceaccount.com'
+          - name: GCP_PROJECT
+            value: cs-spingo1
+          - name: GCP_SA_KEY_FILE_PATH
+            value: /opt/vault/vault-sa.json
+        volumeMounts:
+          - mountPath: /opt/gcloud
+            name: gcp-auth-token
+          - mountPath: /opt/vault
+            readOnly: true
+            name: vault-sa
+          - mountPath: /scripts
+            name: vault-script
+      serviceAccountName: pci
+      volumes:
+        - name: vault-sa
+          secret:
+            defaultMode: 420
+            secretName: vault-sa
+        - name: gcp-auth-token
+          emptyDir: {}
+        - name: vault-script
+          configMap:
+            name: vault-gcp-auto-token
+            defaultMode: 0744
