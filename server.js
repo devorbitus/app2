@@ -29,9 +29,8 @@ app.get('/connect', async (req, res, next) => {
             const postgres_client = new PostgresClient(postgres_config);
             postgres_client.connect();
             const rows = await postgres_client.query('SELECT * FROM companies');
-            console.log('rows', JSON.stringify(rows, null, 2));
             let html = createHtmlTable(rows.rows, ['id', 'name']);
-            console.log(`HTML table data: ${html}`);
+            console.log('presenting table data');
             res.status(200).send(htmlData + `<br>` + html);
         } else {
             console.error('unable to find vault token');
@@ -52,23 +51,19 @@ app.listen(PORT, function () {
 function createHtmlTable(tableRows, tableCol) {
     // open a <script> tag for the string
     let htmlData = "<script>var tableData = `<thead>\n<tr>";
-    console.log(`\ncreateHtmlTable:`);
     // use map() to iterate over the table column names
     tableCol.map(col => {
         col = col.toUpperCase();
         htmlData += `\n<th>${col}</th>`;
-        console.log(`col: ${col}`);
     });
     // open the head and body tags for the table
     htmlData += `\n</thead>\n<tbody>\n`;
-    console.log(`tableRows: ${typeof tableRows}`);
     // iterate over the table row data with map()
     tableRows.map(row => {
         // open a new table row tag for each Postgres row
         htmlData += `\n<tr>`;
         // iterate over the row's data and enclose in <td> tag
         for (val in row) {
-            console.log(`row[val]: ${row[val]}`);
             htmlData += `\n<td>${row[val]}</td>`;
         }
         // close the table row <tr> tag
