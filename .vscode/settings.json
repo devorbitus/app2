@@ -29,5 +29,6 @@
         "checkForMinikubeUpgrade": true,
         "imageBuildTool": "Docker"
     },
-    "githd.blameView.enabled": false
+    "githd.blameView.enabled": false,
+    "shellcheck.enable": false
 }
