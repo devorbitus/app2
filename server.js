@@ -37,7 +37,6 @@ app.get('/connect', async (req, res, next) => {
             console.error('unable to find vault token');
             res.status(500).send(`Unable to find vault token`);
         }
-        res.status(200).send(`Info : ${vaultToken}`);
     } catch (error) {
         console.log('Error', error, JSON.stringify(error, null, 2));
         next(new Error('Server Error : Admin to check logs', error));
