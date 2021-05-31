@@ -1,6 +1,2 @@
 resources:
 - deployment.yml
-configMapGenerator:
-- name: vault-gcp-auto-token
-  files:
-  - gcp_iam_auth_vault.sh
