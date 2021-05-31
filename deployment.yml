@@ -4,6 +4,7 @@ metadata:
   name: app2
   labels:
     app: node-app2
+  namespace: app2
 spec:
   replicas: 1
   selector:
