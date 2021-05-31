@@ -13,7 +13,11 @@ app.get('/connect', async (req, res, next) => {
         let htmlData = fs.readFileSync("./index.html", "utf8");
         const vaultToken = fs.readFileSync('/opt/gcloud/v-token', 'utf-8');
         if (vaultToken) {
-            const VaultSDK = require('node-vault')({ apiVersion: 'v1', endpoint: 'https://vault.spingo1.spingo.armory.io', token: vaultToken });
+            const VaultSDK = require('node-vault')({ 
+                apiVersion: 'v1', 
+                endpoint: process.env.VAULT_ADDR || '', 
+                token: vaultToken 
+            });
             const creds = await VaultSDK.read('database/creds/readonly');
             const { Client: PostgresClient } = require('pg');
             const postgres_config = {

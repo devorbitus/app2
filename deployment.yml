@@ -23,6 +23,8 @@ spec:
         env:
           - name: DATABASE_HOST
             value: 'my-release-postgresql'
+          - name: VAULT_ADDR
+            value: 'https://vault.spingo1.spingo.armory.io'
         volumeMounts:
           - mountPath: /opt/gcloud
             readOnly: true
