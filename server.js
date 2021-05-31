@@ -5,7 +5,7 @@ var PORT = process.env.PORT || 3000;
 
 app.get('/', function (req, res) {
     console.log('Hi!');
-    res.status(200).send('Hello Database World!!!!');
+    res.status(200).send('<h1>Hello Database World!!!!</h1>');
 });
 
 app.get('/connect', async (req, res, next) => {
